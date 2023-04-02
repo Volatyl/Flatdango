@@ -1,11 +1,13 @@
-const movieList = document.getElementById("movieList");
-const movieDetails = document.getElementById("movieDetails");
+let movieList = document.getElementById("movieList");
+let movieDetails = document.getElementById("movieDetails");
+let movies = [];
 
 window.addEventListener("DOMContentLoaded", () => {
   //fetch all movies
   fetch("http://localhost:3000/films")
     .then((res) => res.json())
-    .then((movies) => {
+    .then((data) => {
+      movies = data;
       movies.forEach((movie) => {
         //iterate through all movies
         const li = document.createElement("li");
@@ -14,12 +16,7 @@ window.addEventListener("DOMContentLoaded", () => {
         movieList.appendChild(li);
         li.addEventListener("click", () => showMovieDetails(movie));
       });
-    });
-
-  fetch("http://localhost:3000/films/1")
-    .then((res) => res.json())
-    .then((movie) => {
-      showMovieDetails(movie);
+      showMovieDetails(movies[0]);
     });
 
   //function to get movie details
@@ -70,5 +67,9 @@ function updateMovie(movie) {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(movie),
+  }).then(() => {
+    // update the movie object in memory
+    const index = movies.findIndex((m) => m.id === movie.id);
+    movies[index] = movie;
   });
 }
