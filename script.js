@@ -9,6 +9,7 @@ window.addEventListener("DOMContentLoaded", () => {
       movies.forEach((movie) => {
         //iterate through all movies
         const li = document.createElement("li");
+        li.classList.add("movies");
         li.textContent = movie.title;
         movieList.appendChild(li);
         li.addEventListener("click", () => showMovieDetails(movie));
@@ -28,7 +29,7 @@ window.addEventListener("DOMContentLoaded", () => {
     <h2> ${movie.title}</h2>
     <p>Runtime ${movie.runtime} min</p>
     <p>Showtime ${movie.showtime}</p>
-    <p id="ticketsAvailable">Available tickets: ${availableTickets(
+    <p id="ticketsAvailable"> ${availableTickets(
       movie.capacity,
       movie.tickets_sold
     )}</p>
@@ -39,12 +40,16 @@ window.addEventListener("DOMContentLoaded", () => {
     const buyButton = document.getElementById("buyTicket");
     const ticketsAvailable = document.getElementById("ticketsAvailable");
     buyButton.addEventListener("click", () => {
-      movie.tickets_sold++;
-      updateMovie(movie);
-      ticketsAvailable.textContent = `Available tickets ${availableTickets(
-        movie.capacity,
-        movie.tickets_sold
-      )}`;
+      if (movie.tickets_sold >= movie.capacity) {
+        ticketsAvailable.textContent = "SOLD OUT";
+      } else {
+        movie.tickets_sold++;
+        updateMovie(movie);
+        ticketsAvailable.textContent = `${availableTickets(
+          movie.capacity,
+          movie.tickets_sold
+        )}`;
+      }
     });
   }
 });
@@ -53,7 +58,7 @@ function availableTickets(capacity, tickets_sold) {
   if (tickets_sold >= capacity) {
     return "SOLD OUT";
   } else {
-    return capacity - tickets_sold;
+    return `Available tickets: ${capacity - tickets_sold}`;
   }
 }
 

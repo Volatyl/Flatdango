@@ -1,5 +1,28 @@
+header {
+  text-align: center;
+  background-color: rgb(255, 183, 0);
+  padding: 20px;
+  margin-bottom: 10px;
+}
 main {
   display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+section {
+  background-color: bisque;
+  padding: 30px;
+  text-align: center;
+}
+#movieList {
+  list-style-type: none;
+}
+.movies {
+  background-color: rgb(255, 183, 0);
+  color: rgb(48, 48, 48);
+  margin: 10px;
+  cursor: pointer;
+  padding: 5px 50px;
 }
 img {
   height: 400px;
