@@ -10,6 +10,7 @@ window.addEventListener("DOMContentLoaded", () => {
         //iterate through all movies
         const li = document.createElement("li");
         li.textContent = movie.title;
+        console.log(movie);
         movieList.appendChild(li);
         li.addEventListener("click", () => showMovieDetails(movie));
       });
@@ -31,19 +32,30 @@ window.addEventListener("DOMContentLoaded", () => {
 
     //Function to update tickets
     const buyButton = document.getElementById("buyTicket");
+    const ticketsAvailable = document.getElementById("ticketsAvailable");
     buyButton.addEventListener("click", (event) => {
-      console.log(event);
+      event.preventDefault;
+      movie.tickets_sold++;
+      ticketsAvailable.textContent = `Available tickets ${availableTickets(
+        movie.capacity,
+        movie.tickets_sold
+      )}`;
+      updateMovie(movie);
     });
   }
 });
 //fuction to calculate available tickets
 function availableTickets(capacity, tickets_sold) {
-  return capacity - tickets_sold;
+  if (tickets_sold >= capacity) {
+    return "SOLD OUT";
+  } else {
+    return capacity - tickets_sold;
+  }
 }
 
 //Function to update tickets
 function updateMovie(movie) {
-  fetch(`http://localhost:3000/films/${movie.id}`, {
+  fetch(`http://localhost:3000/films/${movie}`, {
     method: "PUT",
     headers: {
       "Text-Content": "application/json",
