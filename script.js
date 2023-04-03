@@ -33,7 +33,7 @@ window.addEventListener("DOMContentLoaded", () => {
     <button id="buyTicket"> Buy Ticket</button>
     `;
 
-    //Function to update tickets
+    //Function to buy tickets
     const buyButton = document.getElementById("buyTicket");
     const ticketsAvailable = document.getElementById("ticketsAvailable");
     buyButton.addEventListener("click", () => {
